@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ozxmlscene>
 <ozml version="5.0">
-  <library>
-    <project duration="{{ duration }}">
-      <sharegroup>
-        <parameter name="DirectionIn" type="string" default="{{ in_direction }}"/>
-        <parameter name="DirectionOut" type="string" default="{{ out_direction }}"/>
-        <parameter name="Pan" type="bool" default="{{ "1" if pan else "0" }}"/>
-        <parameter name="MotionBlur" type="string" default="{{ motion_blur }}"/>
-      </sharegroup>
-      <layer name="Content" type="group">
-        <behaviour name="MoveIn" type="Move" direction="{{ in_vector }}" startTime="0" duration="{{ duration }}"/>
-        {% if pan %}
-        <behaviour name="Pan" type="Throw" axis="x" speed="50"/>
-        {% endif %}
-        <behaviour name="MoveOut" type="Move" direction="{{ out_vector }}" startTime="{{ duration }}" duration="{{ duration }}"/>
-      </layer>
-    </project>
-  </library>
+  <effect id="com.example.{{ name }}" name="{{ name }}">
+    <group name="Effect Source" id="source">
+      <behavior id="FlyIn" name="Fly In" type="Throw">
+        <parameter name="Initial Velocity" value="{{ in_vector }}" />
+      </behavior>
+      {% if pan %}
+      <behavior id="Pan" name="Pan" type="Spin">
+        <parameter name="Spin Rate" value="10" />
+      </behavior>
+      {% endif %}
+      <behavior id="FlyOut" name="Fly Out" type="Throw">
+        <parameter name="Initial Velocity" value="{{ out_vector }}" />
+        <parameter name="End Condition" value="Time" />
+        <parameter name="End Time" value="{{ duration }}" />
+      </behavior>
+    </group>
+  </effect>
 </ozml>
