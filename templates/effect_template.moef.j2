@@ -1,0 +1,29 @@
+<!DOCTYPE ozxmlscene>
+<ozml version="5.0">
+  <scene>
+    <camera id="camera"/>
+    <light id="light"/>
+
+    <effect id="com.example.{{ name | replace('-', '') }}" name="{{ name }}">
+      <group name="Content" id="content">
+        <effectsource id="source" name="Effect Source"/>
+
+        <behavior id="FlyIn" name="Fly In" type="Throw">
+          <parameter name="Initial Velocity" value="{{ in_vector }}" />
+        </behavior>
+
+        {% if pan %}
+        <behavior id="Pan" name="Pan" type="Spin">
+          <parameter name="Spin Rate" value="10" />
+        </behavior>
+        {% endif %}
+
+        <behavior id="FlyOut" name="Fly Out" type="Throw">
+          <parameter name="Initial Velocity" value="{{ out_vector }}" />
+          <parameter name="End Condition" value="Time" />
+          <parameter name="End Time" value="{{ duration }}" />
+        </behavior>
+      </group>
+    </effect>
+  </scene>
+</ozml>
